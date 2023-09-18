@@ -61,14 +61,21 @@ public class SaveImage extends CordovaPlugin {
         	callback.error("Missing filePath");
             return;
         }
-        performImageSave();
-        // if (PermissionHelper.hasPermission(this, WRITE_EXTERNAL_STORAGE)) {
-        // 	Log.d("SaveImage", "Permissions already granted, or Android version is lower than 6");
-        // 	performImageSave();
-        // } else {
-        // 	Log.d("SaveImage", "Requesting permissions for WRITE_EXTERNAL_STORAGE");
-        // 	PermissionHelper.requestPermission(this, WRITE_PERM_REQUEST_CODE, WRITE_EXTERNAL_STORAGE);
-        // }      
+	// Permission Android 13
+	if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        	performImageSave();
+        } 
+	// Permission Android 12 and lower
+	else {
+        	if (PermissionHelper.hasPermission(this, WRITE_EXTERNAL_STORAGE)) {
+	        	Log.d("SaveImage", "Permissions already granted, or Android version is lower than 6");
+	        	performImageSave();
+        	} else {
+	        	Log.d("SaveImage", "Requesting permissions for WRITE_EXTERNAL_STORAGE");
+	        	PermissionHelper.requestPermission(this, WRITE_PERM_REQUEST_CODE, WRITE_EXTERNAL_STORAGE);
+        	}    
+        }
+         
     }
     
     
