@@ -22,6 +22,8 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
+import android.os.Build;
+
 
 /**
  * The SaveImage class offers a method saving an image to the devices' media gallery.
